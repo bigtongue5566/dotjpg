@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"/>
+  <style>
+    .imagebox{
+      display: inline;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+      <el-container>
+          <el-header>
+              <el-form @submit.native.prevent="findPics">
+                  <div style="margin-top: 15px;">
+                      <el-input placeholder="請輸入關鍵字" v-model="keyword" class="input-with-select">
+                        <el-button slot="append" icon="el-icon-search" @click="findPics"></el-button>
+                      </el-input>
+                  </div>
+              </el-form>
+          </el-header>
+          <el-main>
+              <div v-if="searchResult" style="text-align: center">{{searchResult}}</div>
+              <div class="imagebox" v-for="pic in pics">
+                <img v-bind:src="pic.imgurObject.link" style="height:250px;padding: 10px" />
+              </div>
+          </el-main>
+      </el-container>
+
+  </div>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script>
+     const app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            keyword: '',
+            searchResult: '',
+            pics: [],
+          };
+        },
+        created() {
+        },
+        methods: {
+          findPics(){
+              axios.get(`/api/pics?keyword=${this.keyword}`).then(res => {
+              this.pics = res.data;
+              this.searchResult = this.pics.length ? '': '圖庫查無相關圖片';
+              console.log(searchResult)
+            });
+          }, 
+        }
+      });
+    </script>
+  </script>
+</body>
+</html>
