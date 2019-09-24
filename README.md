@@ -14,4 +14,4 @@ https://www.facebook.com/Funnypicsbot-1226194770763447/
 
 web: 可查詢圖片
 
-https://funny-pics-bot.herokuapp.com/
+https://dotjpg.herokuapp.com/
